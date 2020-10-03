@@ -10,7 +10,56 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_163811) do
+ActiveRecord::Schema.define(version: 2020_10_03_185400) do
+
+  create_table "hcfs", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 50, default: "", null: false
+    t.string "image_path"
+    t.text "description"
+    t.integer "hcf_type", limit: 1, unsigned: true
+    t.string "province", limit: 50, default: "", null: false
+    t.string "city", limit: 50, default: "", null: false
+    t.string "district", limit: 50, default: "", null: false
+    t.string "address", default: "", null: false
+    t.decimal "latitude", precision: 10, scale: 8
+    t.decimal "longitude", precision: 11, scale: 8
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["city"], name: "index_hcfs_on_city"
+    t.index ["district"], name: "index_hcfs_on_district"
+    t.index ["hcf_type"], name: "index_hcfs_on_hcf_type"
+    t.index ["name"], name: "index_hcfs_on_name"
+    t.index ["province"], name: "index_hcfs_on_province"
+  end
+
+  create_table "hcfs_hcps", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "hcf_id", null: false
+    t.integer "hcp_id", null: false
+    t.index ["hcf_id", "hcp_id"], name: "index_hcfs_hcps_on_hcf_id_and_hcp_id"
+  end
+
+  create_table "hcfs_medical_facilities", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "hcf_id", null: false
+    t.integer "medical_facility_id", null: false
+    t.index ["hcf_id", "medical_facility_id"], name: "index_hcfs_medical_facilities_on_hcf_id_and_medical_facility_id"
+  end
+
+  create_table "hcps", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 50, default: "", null: false
+    t.string "image_path"
+    t.text "description"
+    t.integer "speciality_id", unsigned: true
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_hcps_on_name"
+    t.index ["speciality_id"], name: "index_hcps_on_speciality_id"
+  end
+
+  create_table "medical_facilities", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 50, default: "", null: false
+  end
 
   create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "session_id", null: false
@@ -19,6 +68,10 @@ ActiveRecord::Schema.define(version: 2020_10_03_163811) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "specialities", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", limit: 50, default: "", null: false
   end
 
   create_table "users", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
