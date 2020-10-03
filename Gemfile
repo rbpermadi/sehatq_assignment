@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -48,7 +49,32 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'shoulda-matchers'
+  gem 'database_cleaner', require: false
+  gem 'timecop'
+  gem 'simplecov', require: false
+  gem 'capybara-screenshot'
+  gem 'json-schema'
+  gem 'webmock'
+  gem 'cucumber-rails', require: false
+  gem 'rspec-console', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'dotenv'
+gem 'rack-cors', require: 'rack/cors'
+gem 'carrierwave'
+gem 'carrierwave-base64'
+gem 'rspec-rails'
+gem 'rspec_junit_formatter'
+
+# Use Devise for authentication
+gem 'devise'
+# Use Omniauth Facebook plugin
+gem 'omniauth-facebook'
+# Use Omniauth Google plugin
+gem 'omniauth-google-oauth2'
+
+gem 'devise_token_auth'
