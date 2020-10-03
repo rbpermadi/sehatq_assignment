@@ -12,21 +12,33 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  host: localhost
+  pool: <%= ENV['DATABASE_POOL'] %>
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD']%>
+  host: <%= ENV['DATABASE_HOST'] || '127.0.0.1' %>
 
-development:
-  <<: *default
-  database: sehatq_assignment_development
+development: &development
+  adapter:  mysql2
+  database: "<%= ENV['DATABASE_NAME'] %>"
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD']%>
+  pool:     <%= ENV['DATABASE_POOL'] %>
+  host:     <%= ENV['DATABASE_HOST'] || '127.0.0.1' %>
+  port:     <%= ENV['DATABASE_PORT'] || '3306' %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: sehatq_assignment_test
+test: &test
+  adapter:  <%= ENV['DATABASE_TEST_ADAPTER'] || 'mysql2' %>
+  database: "<%= ENV['DATABASE_TEST_NAME'] %>"<%= ENV['TEST_ENV_NUMBER'] %>
+  username: <%= ENV['DATABASE_TEST_USERNAME'] %>
+  password: <%= ENV['DATABASE_TEST_PASSWORD']%>
+  host:     <%= ENV['DATABASE_TEST_HOST'] || '127.0.0.1' %>
+  port:     <%= ENV['DATABASE_TEST_PORT'] || '3306' %>
+  reconnect: true
+  pool:    50
+  timeout: 10000
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -51,4 +63,4 @@ production:
   <<: *default
   database: sehatq_assignment_production
   username: sehatq_assignment
-  password: <%= ENV['SEHATQ_ASSIGNMENT_DATABASE_PASSWORD'] %>
+  password: <%= ENV['SEHATQ_ASSIGNMENT_DATABASE_PROD_PASSWORD'] %>
