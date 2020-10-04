@@ -13,8 +13,14 @@ Rails.application.routes.draw do
       resources :medical_facilities, only: %i[index show], path: 'medical-facilities'
       resources :hcfs, only: %i[index show]
       resources :hcps, only: %i[index show]
-      resources :schedules, only: %i[index show]
+      resources :schedules, path: 'schedules', only: [] do
+        get '' => 'schedules#index', on: :collection
+        get 'date' => 'schedules#date', on: :collection
+        get ':id' => 'schedules#show', on: :collection
+      end
       resources :consultations, only: %i[index show create]
     end
   end
+  # devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth' }
+  devise_for :users, :path_prefix => 'api/v1'
 end
