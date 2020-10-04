@@ -4,6 +4,8 @@
 
 sehatq_assignment is a repository for test procedure in SehatQ Company. sehatq_assignment is an API module for health care online booking. It's using **RubyOnRails** as its framework.
 
+This branch is add social login, but it is still not stateless api. It only generate session in cookies, so I can't use it to access protected api endpoints.
+
 ## Architecture Diagram
 
 ## Owner
