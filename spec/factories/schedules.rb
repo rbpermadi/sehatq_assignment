@@ -15,7 +15,6 @@ FactoryBot.define do
     end
 
     before(:build) do |schedule, evaluator|
-      byebug
       hcp = FactoryBot.build :hcp
       schedule.hcp_id = hcp&.id
 
