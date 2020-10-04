@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :hcfs, only: %i[index show]
       resources :hcps, only: %i[index show]
       resources :schedules, only: %i[index show]
+      resources :consultations, only: %i[index show create]
     end
   end
 end

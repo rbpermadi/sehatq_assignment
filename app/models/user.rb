@@ -6,11 +6,15 @@ class User < ApplicationRecord
   :recoverable, :rememberable, :validatable,
   :omniauthable, omniauth_providers: [:facebook, :google_oauth2]
 
+  before_save -> { skip_confirmation! }
+
   mount_base64_uploader :image_url, ImagePathUploader, file_name: (0...8).map { (65 + rand(26)).chr }.join
 
   scope :not_deleted, -> { where(deleted: false) }
 
   before_validation :set_uid
+
+  has_many :consultations
 
   def self.from_omniauth(auth)
     where(provider: auth.provider.to_s, uid: auth.uid.to_s).first_or_create do |user|
