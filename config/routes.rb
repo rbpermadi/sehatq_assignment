@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :medical_facilities, only: %i[index show], path: 'medical-facilities'
       resources :hcfs, only: %i[index show]
       resources :hcps, only: %i[index show]
+      resources :schedules, only: %i[index show]
     end
   end
 end

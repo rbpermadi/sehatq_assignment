@@ -7,7 +7,6 @@ FactoryBot.define do
     hcp_id { 1 }
 
     before(:create) do |schedule, evaluator|
-      byebug
       hcp = FactoryBot.create :hcp
       schedule.hcp_id = hcp&.id
 
