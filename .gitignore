@@ -38,3 +38,5 @@ yarn-debug.log*
 /vendor
 .env
 /public/uploads
+
+public/documentation.html
