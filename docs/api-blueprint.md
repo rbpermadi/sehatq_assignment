@@ -161,8 +161,8 @@ Returns a list of schedules paginated by the limit and offset and can be filtere
 + Parameters
   + offset: 0 (number, optional) - The start number of requested records
   + limit: 10 (number, optional) - Number of requested records
-  + hcf_ids: "1, 2, 3", (string, optional) - Filter by hcf_ids from /hcfs endpoint, use comma if there are more than 1 hcfs.
-  + hcp_ids: "1, 2, 3", (string, optional) - Filter by hcp_ids from /hcps endpoint, use comma if there are more than 1 hcps.
+  + hcf_ids: `1, 2, 3`, (string, optional) - Use comma if there are more than 1 hcfs.
+  + hcp_ids: `1, 2, 3`, (string, optional) - Use comma if there are more than 1 hcps.
 
 + Request Success (application/json)
 
@@ -192,17 +192,17 @@ Find schedule by schedule id
 
 + Response 404 (application/json)
   + Attributes (object)
-      + errors : `HcfSchedules not found` (string, required)
+      + errors : `Hcfs not found` (string, required)
       + meta (object, required)
           + status: 404 (number, required)
 
 ### List Schedules Dates [GET /schedules/date{?hcp_ids,hcf_ids,start_date,end_date}]
 Returns a list of schedules date filtered by hcf and hcp ids, start_date, end_date
 + Parameters
-  + start_date: "2020-10-10" (string, optional) - The start date of requested records
-  + end_date: "2020-10-20" (string, optional) - The end date of requested records
-  + hcf_ids: "1, 2, 3", (string, optional) - Filter by hcf_ids from /hcfs endpoint, use comma if there are more than 1 hcfs.
-  + hcp_ids: "1, 2, 3", (string, optional) - Filter by hcp_ids from /hcps endpoint, use comma if there are more than 1 hcps.
+  + start_date: `2020-10-10` (string, optional) - The start date of requested records
+  + end_date: `2020-10-20` (string, optional) - The end date of requested records
+  + hcf_ids: `1,2` (string, optional) - Use comma if there are more than 1 hcfs
+  + hcp_ids: `1,2,3` (string, optional) - Use comma if there are more than 1 hcps
 
 + Request Success (application/json)
 
@@ -213,6 +213,70 @@ Returns a list of schedules date filtered by hcf and hcp ids, start_date, end_da
           + status: 200 (number, required)
           + offset: 0 (number, required)
           + limit: 10 (number, required)
+
+# Group Consultations
+A Consultations is a representation of a health care consultaions on the system.
+
+### List Consultations [GET /consultations{?limit,offset,schedule_ids}]
+Returns a list of schedules paginated by the limit and offset and can be filtered by schedules ids.
++ Parameters
+    + offset: 0 (number, optional) - The start number of requested records
+    + limit: 10 (number, optional) - Number of requested records
+    + schedule_ids: `1,2,3`, (string, optional) - Use comma if there are more than 1 schedules.
+
++ Request Success (application/json)
+  + Headers
+      access-token: `Ucdf5zO3F1fq3f19vpFxUg`
+      client: `Y7ms0Hmebg0p4iNMiF8yng`
+      uid: `test2@gmail.com`
+
++ Response 200 (application/json)
+  + Attributes (object)
+      + data (array[SehatQ-Consultations-Response], required)
+      + meta (object, required)
+          + status: 200 (number, required)
+          + offset: 0 (number, required)
+          + limit: 10 (number, required)
+
++ Request 401 (application/json)
+
++ Response 401 (application/json)
+  + Attributes (object)
+      + errors : `You need to sign in or sign up before continuing.` (string, required)
+
+### Find Consultations [GET /consultations/{id}]
+
+Find consultation by consultation id
+
++ Parameters
+  + id (number, required) - Product ID
+
++ Request (application/json)
+  + Headers
+      access-token: `Ucdf5zO3F1fq3f19vpFxUg`
+      client: `Y7ms0Hmebg0p4iNMiF8yng`
+      uid: `test2@gmail.com`
+
++ Response 200 (application/json)
+  + Attributes (object)
+      + data (object, required)
+          + Include SehatQ-Consultations-Response
+      + meta (object, required)
+          + status: 200 (number, required)
+
++ Response 404 (application/json)
+  + Attributes (object)
+      + errors : `Consultation not found` (string, required)
+      + meta (object, required)
+          + status: 404 (number, required)
+
++ Request 401 (application/json)
+  + Headers
+
++ Response 401 (application/json)
+  + Attributes (object)
+      + errors : `You need to sign in or sign up before continuing.` (string, required)
+
 
 # Data Structures
 # `SehatQ-Specialities-Response` (object)
@@ -266,3 +330,13 @@ Returns a list of schedules date filtered by hcf and hcp ids, start_date, end_da
     + id: 1 (number, required)
     + name: `Dr. Rojali` (string, required)
 + hcfs (array[SehatQ-Hcfs-Response], required)
+
+# `SehatQ-Consultations-Response` (object)
++ id: 1 (number, required)
++ date: `2020-10-10` (string, required)
++ users (object, required)
+    + id: 1 (number, required)
+    + name: `Budi` (string, required)
+    + name: `rojali@gmail.com` (string, required)
++ schedule (object, required)
+    + Include SehatQ-Schedules-Response
