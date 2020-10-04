@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_04_011000) do
+ActiveRecord::Schema.define(version: 2020_10_04_023814) do
+
+  create_table "consultations", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "schedule_id", default: 0, null: false
+    t.integer "user_id", default: 0, null: false
+    t.date "date", null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["schedule_id"], name: "index_consultations_on_schedule_id"
+    t.index ["user_id"], name: "index_consultations_on_user_id"
+  end
 
   create_table "hcfs", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
