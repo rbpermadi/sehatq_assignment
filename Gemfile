@@ -80,3 +80,5 @@ gem 'omniauth-google-oauth2'
 gem 'devise_token_auth'
 
 gem 'activerecord-session_store'
+
+gem 'faker'

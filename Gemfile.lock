@@ -154,6 +154,8 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
+    faker (2.14.0)
+      i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
@@ -378,6 +380,7 @@ DEPENDENCIES
   devise_token_auth
   dotenv
   factory_bot_rails
+  faker
   jbuilder (~> 2.7)
   json-schema
   listen (~> 3.2)
