@@ -6,7 +6,7 @@ FactoryBot.define do
 
     before(:create) do |consultation, evaluator|
       user = FactoryBot.create :user
-      user.user_id = user&.id
+      consultation.user_id = user&.id
 
       schedule = FactoryBot.create :schedule
       consultation.schedule_id = schedule&.id
