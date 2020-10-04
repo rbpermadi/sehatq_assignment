@@ -9,6 +9,10 @@ Rails.application.routes.draw do
         sessions:           'api/v1/auth/sessions',
         token_validations:  'devise_token_auth/token_validations'
       }
+      resources :specialities, only: %i[index show]
+      resources :medical_facilities, only: %i[index show], path: 'medical-facilities'
+      resources :hcfs, only: %i[index show]
+      resources :hcps, only: %i[index show]
     end
   end
 end
