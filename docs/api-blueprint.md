@@ -5,6 +5,68 @@ This is draft version of SehatQ Assigment API version 1. This is a public api.
 
 Designed tightly coupled with SehatQ needs.
 
+# Group Auth
+Auth is a representation of authentication process on the system.
+
+### Register [POST /auth]
+
+Register user
+
++ Request (application/json)
+  + Attributes (object)
+      + name: `Rojali Budi Permadi` (string, required)
+      + email: `rojali@gmail.com` (string, required)
+      + password: `12345678` (string, required)
+      + password_confirmation: `12345678` (string, required)
+
++ Response 201 (application/json)
+  + Headers
+      access-token: `Ucdf5zO3F1fq3f19vpFxUg`
+      client: `Y7ms0Hmebg0p4iNMiF8yng`
+      uid: `test2@gmail.com`
+
+  + Attributes (object)
+      + data (object, required)
+          + Include SehatQ-Auth-Response
+      + meta (object, required)
+          + status: 201 (number, required)
+
++ Response 422 (application/json)
+  + Attributes (object)
+      + errors (array[string], required)
+          + `Email has already been taken`
+      + meta (object, required)
+          + status: 422 (number, required)
+
+### SignIn [POST /auth/sign_in]
+
+Signin user
+
++ Request (application/json)
+  + Attributes (object)
+      + email: `rojali@gmail.com` (string, required)
+      + password: `12345678` (string, required)
+
++ Response 200 (application/json)
+  + Headers
+      access-token: `Ucdf5zO3F1fq3f19vpFxUg`
+      client: `Y7ms0Hmebg0p4iNMiF8yng`
+      uid: `test2@gmail.com`
+
+  + Attributes (object)
+      + data (object, required)
+          + Include SehatQ-Auth-Response
+      + meta (object, required)
+          + status: 200 (number, required)
+
++ Response 401 (application/json)
+  + Attributes (object)
+      + errors (array[string], required)
+          + `Invalid login credentials. Please try again.`
+      + meta (object, required)
+          + status: 401 (number, required)
+
+
 # Group Specialities
 Specialities is a representation of speciality on the system.
 
@@ -242,7 +304,8 @@ Returns a list of schedules paginated by the limit and offset and can be filtere
 
 + Response 401 (application/json)
   + Attributes (object)
-      + errors : `You need to sign in or sign up before continuing.` (string, required)
+      + errors (array[string], required)
+          + `You need to sign in or sign up before continuing.`
 
 ### Find Consultations [GET /consultations/{id}]
 
@@ -275,10 +338,57 @@ Find consultation by consultation id
 
 + Response 401 (application/json)
   + Attributes (object)
-      + errors : `You need to sign in or sign up before continuing.` (string, required)
+      + errors (array[string], required)
+          + `You need to sign in or sign up before continuing.`
+
+### Create Consultations [POST /consultations]
+
+Create consulations
+
++ Request (application/json)
+  + Headers
+      access-token: `Ucdf5zO3F1fq3f19vpFxUg`
+      client: `Y7ms0Hmebg0p4iNMiF8yng`
+      uid: `test2@gmail.com`
+
+  + Attributes (object)
+      + schedule_id: 1 (number, required)
+      + date: 1 (string, required)
+
++ Response 201 (application/json)
+  + Attributes (object)
+      + data (object, required)
+          + Include SehatQ-Consultations-Response
+      + meta (object, required)
+          + status: 201 (number, required)
+
++ Response 400 (application/json)
+  + Attributes (object)
+      + errors : `Fully booked` (string, required)
+      + meta (object, required)
+          + status: 400 (number, required)
+
++ Request 401 (application/json)
+  + Headers
+  + Attributes (object)
+      + schedule_id: 1 (number, required)
+      + date: 1 (string, required)
+
++ Response 401 (application/json)
+  + Attributes (object)
+      + errors (array[string], required)
+          + `You need to sign in or sign up before continuing.`
 
 
 # Data Structures
+# `SehatQ-Auth-Response` (object)
++ id: 1 (number, required)
++ name: `Rojali Budi Permadi` (string, required)
++ email: `test1212@gmail.com` (string, required)
++ image_url: `/uploads/user/image_path/1/rojali.png` (string, required)
++ provider: `email` (string, required)
++ uid: `test1212@gmail.com` (string, required)
+
 # `SehatQ-Specialities-Response` (object)
 + id: 1 (number, required)
 + name: `Dokter Umum` (string, required)
