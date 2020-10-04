@@ -1,4 +1,6 @@
-Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :facebook,      ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET']
-  provider :google_oauth2, ENV['GOOGLE_KGOOGLE_APP_IDEY'],   ENV['GOOGLE_APP_SECRET']
+OmniAuth.config.on_failure = Proc.new do |env|
+  env['devise.mapping'] = Devise.mappings[:user]
+  controller_name  = ActiveSupport::Inflector.camelize(env['devise.mapping'].controllers[:omniauth_callbacks])
+  controller_klass = ActiveSupport::Inflector.constantize("#{controller_name}Controller")
+  controller_klass.action(:failure).call(env)
 end
