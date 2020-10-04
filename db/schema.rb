@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_185400) do
+ActiveRecord::Schema.define(version: 2020_10_04_011000) do
 
   create_table "hcfs", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
@@ -59,6 +59,23 @@ ActiveRecord::Schema.define(version: 2020_10_03_185400) do
 
   create_table "medical_facilities", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", limit: 50, default: "", null: false
+  end
+
+  create_table "schedules", id: :integer, unsigned: true, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "hcf_id", default: 0, null: false
+    t.integer "hcp_id", default: 0, null: false
+    t.string "day", limit: 3, null: false
+    t.time "time_start", null: false
+    t.time "time_end", null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["day", "hcf_id", "hcp_id"], name: "index_schedules_on_day_and_hcf_id_and_hcp_id"
+    t.index ["day"], name: "index_schedules_on_day"
+    t.index ["hcf_id"], name: "index_schedules_on_hcf_id"
+    t.index ["hcp_id"], name: "index_schedules_on_hcp_id"
+    t.index ["time_end"], name: "index_schedules_on_time_end"
+    t.index ["time_start"], name: "index_schedules_on_time_start"
   end
 
   create_table "sessions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

@@ -6,6 +6,7 @@ RSpec.describe Hcp, type: :model do
   describe 'associations' do
     it { should have_and_belong_to_many(:hcfs) }
     it { should belong_to(:speciality) }
+    it { should have_many(:schedule) }
   end
 
   describe 'validations' do

@@ -1,6 +1,7 @@
 class Hcf < ApplicationRecord
   has_and_belongs_to_many :hcps
   has_and_belongs_to_many :medical_facilities
+  has_many :schedule
 
   mount_base64_uploader :image_path, ImagePathUploader, file_name: (0...8).map { (65 + rand(26)).chr }.join
 
